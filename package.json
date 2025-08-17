@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
-    "test:prompts": "node test/test_prompts.js"
+    "test:prompts": "node test/test_prompts.js",
+    "vercel-build": "echo 'Vercel will build api/ functions and serve public/'"
   },
   "dependencies": {
     "cors": "^2.8.5",

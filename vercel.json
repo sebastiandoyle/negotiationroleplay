@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/*.js", "use": "@vercel/node" },
+    { "src": "public/**", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/api/judge", "dest": "/api/judge.js" },
+    { "src": "/api/respond", "dest": "/api/respond.js" },
+    { "src": "/api/check-concession", "dest": "/api/check-concession.js" },
+    { "src": "/api/metadata", "dest": "/api/metadata.js" },
+    { "src": "/(.*)", "dest": "/public/$1" }
+  ]
+}
