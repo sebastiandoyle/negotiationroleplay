@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Negotiation Roleplay: Trump ↔ Putin</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="topbar">
+    <div class="persona">
+      <label>You play as:</label>
+      <select id="persona">
+        <option value="trump">Trump</option>
+        <option value="putin">Putin</option>
+      </select>
+      <button id="resetBtn">Reset</button>
+    </div>
+    <div class="scores">
+      <div class="score-group">
+        <div class="score-label">Trump</div>
+        <div class="bar"><div id="bar-trump"></div></div>
+        <div id="score-trump" class="score-value">50</div>
+      </div>
+      <div class="score-group">
+        <div class="score-label">Putin</div>
+        <div class="bar"><div id="bar-putin"></div></div>
+        <div id="score-putin" class="score-value">50</div>
+      </div>
+      <div class="score-group">
+        <div class="score-label">Overall Pie</div>
+        <div class="bar"><div id="bar-pie"></div></div>
+        <div id="score-pie" class="score-value">100</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="left">
+      <h2>Heads of Agreement</h2>
+      <div id="rulesBox" class="rules-box"></div>
+
+      <div class="hoa">
+        <div class="hoa-col">
+          <h3>Your Concessions</h3>
+          <ul id="your-available"></ul>
+          <h4>Confirmed</h4>
+          <ul id="your-confirmed"></ul>
+        </div>
+        <div class="hoa-col">
+          <h3>Opponent Concessions</h3>
+          <h4>Pending</h4>
+          <ul id="opp-pending"></ul>
+          <h4>Confirmed</h4>
+          <ul id="opp-confirmed"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="right">
+      <div id="chat" class="chat"></div>
+      <div id="judge" class="judge"></div>
+      <div class="composer">
+        <input id="message" placeholder="Type your message. You may declare a concession..." />
+        <button id="send">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
