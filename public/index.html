@@ -15,21 +15,31 @@
         <option value="putin">Putin</option>
       </select>
       <button id="resetBtn">Reset</button>
+      <button id="helpBtn" class="help-btn">Help</button>
     </div>
     <div class="scores">
       <div class="score-group">
-        <div class="score-label">Trump</div>
-        <div class="bar"><div id="bar-trump"></div></div>
+        <div class="score-label">Trump <span class="batna" id="batna-trump"></span></div>
+        <div class="bar">
+          <div id="bar-trump-current" class="bar-layer current"></div>
+          <div id="bar-trump-projected" class="bar-layer projected"></div>
+        </div>
         <div id="score-trump" class="score-value">50</div>
       </div>
       <div class="score-group">
-        <div class="score-label">Putin</div>
-        <div class="bar"><div id="bar-putin"></div></div>
+        <div class="score-label">Putin <span class="batna" id="batna-putin"></span></div>
+        <div class="bar">
+          <div id="bar-putin-current" class="bar-layer current"></div>
+          <div id="bar-putin-projected" class="bar-layer projected"></div>
+        </div>
         <div id="score-putin" class="score-value">50</div>
       </div>
       <div class="score-group">
         <div class="score-label">Overall Pie</div>
-        <div class="bar"><div id="bar-pie"></div></div>
+        <div class="bar">
+          <div id="bar-pie-current" class="bar-layer current"></div>
+          <div id="bar-pie-projected" class="bar-layer projected"></div>
+        </div>
         <div id="score-pie" class="score-value">100</div>
       </div>
     </div>
@@ -37,32 +47,132 @@
 
   <div class="container">
     <div class="left">
-      <h2>Heads of Agreement</h2>
-      <div id="rulesBox" class="rules-box"></div>
+      <div class="hoa-doc">
+        <h2>Heads of Agreement</h2>
+        <div class="hoa-meta">
+          <div><strong>Parties:</strong> <span id="party-you">United States of America</span> and <span id="party-opp">Russian Federation</span></div>
+          <div><strong>Date:</strong> <span id="hoa-date"></span></div>
+        </div>
+        <div class="hoa-section">
+          <h3>Confirmed Clauses (Your Commitments)</h3>
+          <ol id="your-confirmed-clauses" class="clauses"></ol>
+        </div>
+        <div class="hoa-section">
+          <h3>Confirmed Clauses (Opponent Commitments)</h3>
+          <ol id="opp-confirmed-clauses" class="clauses"></ol>
+        </div>
+        <div class="hoa-section signatures">
+          <h3>Execution</h3>
+          <div class="signatures-row">
+            <div class="signature-block">
+              <div class="sig-line" id="sig-you-line"></div>
+              <div class="sig-name" id="sig-you-name"></div>
+              <div class="sig-date" id="sig-you-date"></div>
+            </div>
+            <div class="signature-block">
+              <div class="sig-line" id="sig-opp-line"></div>
+              <div class="sig-name" id="sig-opp-name"></div>
+              <div class="sig-date" id="sig-opp-date"></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <div class="hoa">
-        <div class="hoa-col">
-          <h3>Your Concessions</h3>
-          <ul id="your-available"></ul>
-          <h4>Confirmed</h4>
-          <ul id="your-confirmed"></ul>
-        </div>
-        <div class="hoa-col">
-          <h3>Opponent Concessions</h3>
-          <h4>Pending</h4>
-          <ul id="opp-pending"></ul>
-          <h4>Confirmed</h4>
-          <ul id="opp-confirmed"></ul>
-        </div>
+      <div class="pending-panel">
+        <h3>Opponent Pending Concession</h3>
+        <div id="opp-pending-clause" class="pending-clause"></div>
+      </div>
+
+      <div class="available">
+        <h3>Your Available Concessions</h3>
+        <ul id="your-available"></ul>
       </div>
     </div>
 
     <div class="right">
       <div id="chat" class="chat"></div>
       <div id="judge" class="judge"></div>
+      <div class="actions">
+        <button id="btn-request-agree">Request Agreement</button>
+        <button id="btn-conclude">Conclude Agreement</button>
+      </div>
       <div class="composer">
-        <input id="message" placeholder="Type your message. You may declare a concession..." />
+        <input id="message" placeholder="Type your message. You may declare a concession or request agreement..." />
         <button id="send">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Onboarding overlay -->
+  <div id="onboarding" class="ob-overlay hidden" aria-modal="true" role="dialog">
+    <div class="ob-card">
+      <div class="ob-progress"><span id="ob-step">1</span>/5</div>
+      <div class="ob-body" id="ob-slide-1">
+        <h3>Welcome! Win by growing the pie</h3>
+        <p>Follow principled rules and exchange concessions that give more than they cost. Bigger pie, better deal.</p>
+        <div class="ob-demo ob-bars">
+          <div class="mini-bars">
+            <div class="mini-row"><span>Trump</span><div class="mini-bar"><div id="ob-t-cur"></div><div id="ob-t-proj"></div></div></div>
+            <div class="mini-row"><span>Putin</span><div class="mini-bar"><div id="ob-p-cur"></div><div id="ob-p-proj"></div></div></div>
+            <div class="mini-row"><span>Pie</span><div class="mini-bar"><div id="ob-pie-cur"></div><div id="ob-pie-proj"></div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="ob-body hidden" id="ob-slide-2">
+        <h3>Principled move → Opportunity</h3>
+        <p>When your message follows a rule, the opponent offers a pending concession.</p>
+        <div class="ob-demo ob-chat">
+          <div class="message user"><div class="who">You</div><div>Let’s focus on interests and options.</div></div>
+          <div class="message opp"><div class="who">Opponent</div><div class="typing"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div></div>
+        </div>
+      </div>
+      <div class="ob-body hidden" id="ob-slide-3">
+        <h3>Concessions at a glance</h3>
+        <p>Hollow teal balls = your cost. Solid blue balls = their gain.</p>
+        <div class="ob-demo ob-cons">
+          <div class="cons-card">
+            <div class="title">Limited sanctions easing</div>
+            <div class="balls"><span class="ball user-hollow"></span><span class="ball user-hollow"></span><span class="ball user-hollow"></span><span class="ball user-hollow"></span><span class="ball-divider"></span><span class="ball opp-full"></span><span class="ball opp-full"></span><span class="ball opp-full"></span><span class="ball opp-full"></span><span class="ball opp-full"></span><span class="ball opp-full"></span><span class="ball opp-full"></span><span class="ball opp-full"></span><span class="ball opp-full"></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="ob-body hidden" id="ob-slide-4">
+        <h3>Fair swap rule</h3>
+        <p>Your concession must benefit them at least as much as their proposed cost to accept.</p>
+        <div class="ob-demo ob-swap">
+          <div class="swap-row">
+            <div>They propose cost 3</div>
+            <div class="balls"><span class="ball opp-full"></span><span class="ball opp-full"></span><span class="ball opp-full"></span></div>
+          </div>
+          <div class="swap-row">
+            <div>Your offer benefit 2 → rejected</div>
+            <div class="balls"><span class="ball user-hollow"></span><span class="ball user-hollow"></span></div>
+          </div>
+          <div class="swap-row">
+            <div>Your offer benefit 4 → accepted</div>
+            <div class="balls"><span class="ball user-hollow"></span><span class="ball user-hollow"></span><span class="ball user-hollow"></span><span class="ball user-hollow"></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="ob-body hidden" id="ob-slide-5">
+        <h3>BATNA and finish</h3>
+        <p>Request agreement when your score ≥ your BATNA. Conclude when both sides meet theirs, and signatures appear.</p>
+        <div class="ob-demo ob-sign">
+          <div class="mini-bars">
+            <div class="mini-row"><span>BATNA</span><div class="mini-bar"><div id="ob-batna"></div></div></div>
+          </div>
+          <div class="signatures-row demo">
+            <div class="signature-block"><div class="sig-line"></div><div class="sig-name">Donald J. Trump</div></div>
+            <div class="signature-block"><div class="sig-line"></div><div class="sig-name">Vladimir V. Putin</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="ob-actions">
+        <button id="ob-skip" class="ob-link">Skip</button>
+        <div class="spacer"></div>
+        <button id="ob-prev" class="ob-btn" disabled>Back</button>
+        <button id="ob-next" class="ob-btn">Next</button>
+        <button id="ob-start" class="ob-btn hidden">Start</button>
       </div>
     </div>
   </div>
